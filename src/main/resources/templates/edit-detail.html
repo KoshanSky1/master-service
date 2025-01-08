@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование документа</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            color: #007BFF;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        button {
+            width: 150px;
+            padding: 8px;
+            background-image: linear-gradient(45deg, #007BFF, #00CFFF);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-image: linear-gradient(45deg, #0056b3, #00A9C8);
+        }
+
+        input[type="text"], select {
+            width: 215px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        input::placeholder {
+            color: #888;
+            opacity: 1;
+        }
+
+        select {
+            height: 2em;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        .alert {
+            margin: 30px 0;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .button-back {
+            width: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <a th:href="@{/details/{masterId}(masterId=${masterId})}">
+        <button class="button-back">Назад</button>
+    </a>
+</div>
+
+<div class="form-container">
+    <form th:action="@{/details/edit/{id}(id=${detail.id})}" method="post" th:object="${detail}">
+        <h1>Редактирование спецификации</h1>
+        <div>
+            <input name="name" th:value="${name}" placeholder="Введите новое наименование" type="text">
+            <input name="amount" th:value="${amount}" placeholder="Введите новую сумму" type="text">
+            <button type="submit" name="find-offers">Обновить документ</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

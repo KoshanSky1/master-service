@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список документов</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        #container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .column {
+            flex: 1;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h4 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #007BFF;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #master-list {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 15px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button {
+            width: 150px;
+            height: 40px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-image: linear-gradient(45deg, #007BFF, #00CFFF, #007BFF);
+            background-size: 300% 100%;
+            animation: gradient 3s ease infinite;
+            transition: transform 0.2s;
+            font-size: 16px;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #createParkingForm {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="container">
+    <div class="column">
+        <h4>Список всех документов</h4>
+        <form th:action="@{/masters/delete}" method="post" id="deleteMasterForm">
+            <select id="master-list" name="masterId" size="10">
+                <option th:each="master : ${allMasters}"
+                        th:value="${master.id()}"
+                        th:text="${master.number() + ' ' + master.date() + ' ' + ' ' + master.amount() + ' ' + master.description()}">
+                </option>
+            </select>
+        </form>
+        <div class="button-container">
+            <button type="button" onclick="viewSpecifications()">Посмотреть спецификации</button>
+            <button type="button" onclick="editMaster()">Редактировать документ</button>
+            <button type="submit" form="deleteMasterForm">Удалить документ</button>
+        </div>
+    </div>
+</div>
+
+<form th:action="@{/masters}" method="post">
+    <div>
+        <h4>Создать новый документ</h4>
+    </div>
+    <div>
+        <div>
+            <input name="number" th:value="${number}" placeholder="Введите номер" type="text">
+        </div>
+        <div>
+            <input name="date" th:value="${date}" placeholder="Введите дату" type="text">
+        </div>
+        <div>
+            <input name="description" th:value="${description}" placeholder="Введите описание" type="text">
+        </div>
+        <div>
+            <button type="submit" name="find-offers">Создать</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    function viewSpecifications() {
+        var masterSelect = document.getElementById("master-list");
+        var selectedMasterId = masterSelect.value;
+
+        if (selectedMasterId) {
+            window.location.href = '/details/' + selectedMasterId;
+        } else {
+            alert("Пожалуйста, выберите документ для просмотра спецификаций.");
+        }
+    }
+
+    function editMaster() {
+        var masterSelect = document.getElementById("master-list");
+        var selectedMasterId = masterSelect.value;
+
+        if (selectedMasterId) {
+            window.location.href = '/masters/' + selectedMasterId;
+        } else {
+            alert("Пожалуйста, выберите документ для редактирования.");
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список спецификаций</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        #container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .column {
+            flex: 1;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h4 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #007BFF;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #details-list {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 15px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button {
+            width: 150px;
+            height: 40px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-image: linear-gradient(45deg, #007BFF, #00CFFF, #007BFF);
+            background-size: 300% 100%;
+            animation: gradient 3s ease infinite;
+            transition: transform 0.2s;
+            font-size: 16px;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #createParkingForm {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .button-back {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button-back:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+<div>
+    <a href="/masters">
+        <button class="button-back">Назад</button>
+    </a>
+</div>
+
+<div id="container">
+    <div class="column">
+        <h4>Список всех спецификаций к документу с ID: <span th:text="${masterId}"></span></h4>
+        <form th:action="@{/details/{masterId}/delete(masterId=${masterId})}" method="post" id="deleteDetailForm">
+            <select id="details-list" name="detailId" size="10">
+                <option th:each="detail : ${allDetails}"
+                        th:value="${detail.id()}"
+                        th:text="${detail.name() + ' ' + detail.amount()}">
+                </option>
+            </select>
+        </form>
+        <div class="button-container">
+            <button type="button" onclick="editDetail()">Редактировать спецификацию</button>
+            <button type="submit" form="deleteDetailForm">Удалить спецификацию</button>
+        </div>
+    </div>
+</div>
+
+<form th:action="@{/details/{masterId}(masterId=${masterId})}" method="post">
+    <div>
+        <h4>Создать новую спецификацию</h4>
+    </div>
+    <div>
+        <div>
+            <input name="name"
+                   th:value="${name}" placeholder="Введите название" type="text">
+        </div>
+        <div>
+            <input name="amount"
+                   th:value="${amount}" placeholder="Введите сумму" type="text">
+        </div>
+        <div>
+            <button type="submit" name="find-offers">Создать</button>
+        </div>
+    </div>
+</form>
+<script>
+    function editDetail() {
+        var detailSelect = document.getElementById("details-list");
+        var selectedDetailId = detailSelect.value;
+
+        if (selectedDetailId) {
+            window.location.href = '/details/get/' + selectedDetailId;
+        } else {
+            alert("Пожалуйста, выберите спецификацию для редактирования.");
+        }
+    }
+</script>
+</body>
+</html>

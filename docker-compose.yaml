@@ -1,0 +1,25 @@
+services:
+
+  master-service:
+    build: .
+    image: master-service
+    container_name: master-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/master-details-db
+
+
+  db:
+    image: postgres:13.7-alpine
+    container_name: db
+    ports:
+      - "6432:5432"
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_DB=master-details-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
