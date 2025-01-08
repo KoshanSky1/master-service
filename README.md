@@ -43,7 +43,7 @@ Detail - список спецификаций с полями: наименов
 ##### Второй способ:
 • Установить и запустить _Docker_.
 
-• Поменять в docker-compose.yaml POSTGRES_USER и POSTGRES_PASSWORD на свои логин и пароль от Postgres. . 
+• Поменять в docker-compose.yaml POSTGRES_USER и POSTGRES_PASSWORD на свои логин и пароль от Postgres. 
 
 • Запустить контейнер командой `docker-compose up`.
 
