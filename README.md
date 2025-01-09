@@ -24,6 +24,7 @@ Java, PostgreSQL, Spring Boot, Hibernate, REST API, Thymeleaf, Apache Maven, Doc
 ![2025-01-08_18-46-55](https://github.com/user-attachments/assets/414d9b38-fbf6-4758-9a27-92a1982fa21c)
 При попытке создать новый документ с уже существующим номером пользователь получает сообщение об ошибке:
 ![2025-01-08_18-44-29](https://github.com/user-attachments/assets/71b1b063-e7ec-48e1-882a-cc53b4b5d834)
+
 Ошибка, также, логируется в БД:
 ![2025-01-08_18-45-31](https://github.com/user-attachments/assets/2aa91768-3c7a-4eb7-bf39-5c80471f1418)
 При выборе документа из списка и нажатии кнопки "Посмотреть специфиикации" открывается
